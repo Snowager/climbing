@@ -1,11 +1,10 @@
 import { StyleSheet, Text, View, Button } from 'react-native';
-import TopBar from '../components/topBar';
 import { Camera, CameraType } from 'expo-camera';
-import * as Permissions from 'expo-permissions';
+import CameraButton from '../components/cameraButton';
 import React, { useEffect, useMemo, useState } from 'react';
 
-export default function PictureView() {
-
+export default function PictureView({ navigation }) {
+    const [cameraLoad, setCameraLoad] = useState(false);
     const [camera, setCamera] = useState(null);
     const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
     const [staticPermission, setStaticPermission] = useState(false);
@@ -21,6 +20,18 @@ export default function PictureView() {
         permissionFunction();
     }, [])
 
+    useEffect(() => {
+        navigation.addListener('focus', () => {
+            setCameraLoad(true)
+        })
+    }, [])
+
+    useEffect(() => {
+        navigation.addListener('blur', () => {
+            setCameraLoad(false)
+        })
+    }, [])
+
     const gui = useMemo(() => {
         return (
             !staticPermission ?
@@ -29,12 +40,14 @@ export default function PictureView() {
                     <Text>Nothing</Text>
                 </View>
                 :
-                <View style={styles.container}>
-                    <Camera style={styles.camera} type={cameraType} ratio={'1:1'} ref={(ref) => setCamera(ref)}>
-                    </Camera>
+                <View style={styles.mainPane}>
+                    {cameraLoad &&
+                        <Camera style={styles.camera} type={cameraType} ratio={'1:1'} ref={(ref) => setCamera(ref)}>
+                            <CameraButton />
+                        </Camera>}
                 </View>
         )
-    }, [camera, cameraType, staticPermission]
+    }, [camera, cameraType, staticPermission, cameraLoad]
     )
 
     return (
@@ -48,12 +61,12 @@ const styles = StyleSheet.create({
     },
     mainPane: {
         flex: 1,
-        maxHeight: '1000px',
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+
+        width: "100%",
     },
     camera: {
-        flex: 1,
+        height: "100%",
+        justifyContent: 'flex-end',
+        alignItems: 'center',
     }
 });
