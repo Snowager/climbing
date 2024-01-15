@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native';
 import TopBar from './topBar';
+import CameraButton from './cameraButton';
 
 export default function Home() {
     return (
         <View style={styles.container}>
-            <TopBar/>
+            <TopBar />
             <View style={styles.mainPane}></View>
         </View>
     );
@@ -12,16 +13,17 @@ export default function Home() {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     mainPane: {
         flex: 1,
         maxHeight: '1000px',
         backgroundColor: '#fff',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
+        paddingBottom: "20px",
     },
-    });
+});

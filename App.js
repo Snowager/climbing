@@ -22,7 +22,7 @@ export default function App() {
           })}>
           <Tab.Screen name="Login" component={Login} />
           <Tab.Screen name="Home" component={Home} />
-          <Tab.Screen name="Picturess" component={PictureView} />
+          <Tab.Screen name="Camera" component={PictureView} />
         </Tab.Navigator>
       </NavigationContainer>
       <StatusBar style="light" />
