@@ -1,20 +1,32 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import Login from './components/login';
+import Home from './components/home';
+import PictureView from './pages/pictureView';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+const Tab = createBottomTabNavigator();
+
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+      <NavigationContainer>
+        <Tab.Navigator
+          initialRouteName='Home'
+          screenOptions={({ route }) => ({
+            tabBarActiveTintColor: '#ca3',
+            tabBarInactiveTintColor: '#fff',
+            tabBarActiveBackgroundColor: '#fff',
+            tabBarInactiveBackgroundColor: '#000',
+          })}>
+          <Tab.Screen name="Login" component={Login} />
+          <Tab.Screen name="Home" component={Home} />
+          <Tab.Screen name="Picturess" component={PictureView} />
+        </Tab.Navigator>
+      </NavigationContainer>
+      <StatusBar style="light" />
+    </>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
