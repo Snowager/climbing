@@ -2,6 +2,8 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
 import CameraButton from '../components/cameraButton';
 import React, { useEffect, useMemo, useState } from 'react';
+import CameraBottomIconContainer from '../components/cameraBottomIconContainer';
+import PictureButton from '../components/pictureButton';
 
 export default function PictureView({ navigation }) {
     const [cameraLoad, setCameraLoad] = useState(false);
@@ -32,6 +34,10 @@ export default function PictureView({ navigation }) {
         })
     }, [])
 
+    function flipCamera() {
+        setCameraType(cameraType == Camera.Constants.Type.back ? Camera.Constants.Type.front : Camera.Constants.Type.back)
+    }
+
     const gui = useMemo(() => {
         return (
             !staticPermission ?
@@ -42,8 +48,11 @@ export default function PictureView({ navigation }) {
                 :
                 <View style={styles.mainPane}>
                     {cameraLoad &&
-                        <Camera style={styles.camera} type={cameraType} ratio={'1:1'} ref={(ref) => setCamera(ref)}>
-                            <CameraButton />
+                        <Camera style={styles.camera} type={cameraType} ratio={'4:3'} ref={(ref) => setCamera(ref)}>
+                            <CameraBottomIconContainer>
+                                <CameraButton onPress={flipCamera} />
+                                <PictureButton onPress={flipCamera} />
+                            </CameraBottomIconContainer>
                         </Camera>}
                 </View>
         )
@@ -61,7 +70,6 @@ const styles = StyleSheet.create({
     },
     mainPane: {
         flex: 1,
-
         width: "100%",
     },
     camera: {
