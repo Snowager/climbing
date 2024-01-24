@@ -6,6 +6,7 @@ import CameraBottomIconContainer from '../components/cameraBottomIconContainer';
 import PictureButton from '../components/pictureButton';
 import FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library'
+import { useAlbum } from '../hooks/useAlbum';
 
 export default function PictureView({ navigation }) {
     const [cameraLoad, setCameraLoad] = useState(false);
@@ -13,6 +14,10 @@ export default function PictureView({ navigation }) {
     const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
     const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
     const [staticPermission, setStaticPermission] = useState(false);
+    const [albumName, setAlbumName] = useState("Hair");
+
+
+    const album = useAlbum(albumName);
 
     permissionFunction = async () => {
         const permission = await Camera.requestCameraPermissionsAsync();
@@ -24,6 +29,10 @@ export default function PictureView({ navigation }) {
     useEffect(() => {
         permissionFunction();
     }, [])
+
+    useEffect(() => {
+        console.log(album)
+    }, [album])
 
     useEffect(() => {
         navigation.addListener('focus', () => {
@@ -66,7 +75,7 @@ export default function PictureView({ navigation }) {
                         <Camera style={styles.camera} type={cameraType} ratio={'4:3'} ref={(ref) => setCamera(ref)} t>
                             <CameraBottomIconContainer>
                                 <PictureButton onPress={takePicture} />
-                                <CameraButton onPress={flipCamera} />   
+                                <CameraButton onPress={flipCamera} />
                             </CameraBottomIconContainer>
                         </Camera>}
                 </View>
