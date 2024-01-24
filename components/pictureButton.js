@@ -14,17 +14,16 @@ const styles = StyleSheet.create({
         borderRadius: Dimensions.get('window').width * .5,
         borderColor: "grey",
         borderWidth: 2,
-        backgroundColor: "#E5CB3D",
+        backgroundColor: "#444887",
         height: "100%",
         width: "100%",
         zIndex: 3,
     },
     cameraButtonContainer: {
-        height: 40,
-        width: 40,
-        justifyContent: "center",
+        height: 80,
+        width: 80,
+        justifyContent: "flex-end",
         alignItems: "center",
         zIndex: 3,
-        marginBottom: 20,
     }
 })
