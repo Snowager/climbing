@@ -4,15 +4,18 @@ import CameraButton from '../components/cameraButton';
 import React, { useEffect, useMemo, useState } from 'react';
 import CameraBottomIconContainer from '../components/cameraBottomIconContainer';
 import PictureButton from '../components/pictureButton';
+import FileSystem from 'expo-file-system';
+import * as MediaLibrary from 'expo-media-library'
 
 export default function PictureView({ navigation }) {
     const [cameraLoad, setCameraLoad] = useState(false);
     const [camera, setCamera] = useState(null);
     const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
+    const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
     const [staticPermission, setStaticPermission] = useState(false);
 
     permissionFunction = async () => {
-        const permission = await Camera.requestMicrophonePermissionsAsync();
+        const permission = await Camera.requestCameraPermissionsAsync();
         if (permission.granted) {
             setStaticPermission(true);
         }
@@ -38,6 +41,18 @@ export default function PictureView({ navigation }) {
         setCameraType(cameraType == Camera.Constants.Type.back ? Camera.Constants.Type.front : Camera.Constants.Type.back)
     }
 
+    async function takePicture() {
+        if (!camera) {
+            return
+        }
+        const photo = await camera.takePictureAsync();
+        console.log(photo);
+        if (permissionResponse) {
+            await MediaLibrary.saveToLibraryAsync(photo.uri);
+        }
+    }
+
+
     const gui = useMemo(() => {
         return (
             !staticPermission ?
@@ -48,10 +63,10 @@ export default function PictureView({ navigation }) {
                 :
                 <View style={styles.mainPane}>
                     {cameraLoad &&
-                        <Camera style={styles.camera} type={cameraType} ratio={'4:3'} ref={(ref) => setCamera(ref)}>
+                        <Camera style={styles.camera} type={cameraType} ratio={'4:3'} ref={(ref) => setCamera(ref)} t>
                             <CameraBottomIconContainer>
-                                <CameraButton onPress={flipCamera} />
-                                <PictureButton onPress={flipCamera} />
+                                <PictureButton onPress={takePicture} />
+                                <CameraButton onPress={flipCamera} />   
                             </CameraBottomIconContainer>
                         </Camera>}
                 </View>
