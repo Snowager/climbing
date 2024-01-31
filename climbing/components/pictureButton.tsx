@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, View, Dimensions } from "react-native";
+import React from 'react'
 
 export default function PictureButton({ onPress }) {
 

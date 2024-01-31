@@ -6,7 +6,14 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "lint": "gts lint",
+    "clean": "gts clean",
+    "compile": "tsc",
+    "fix": "gts fix",
+    "prepare": "npm.cmd run compile",
+    "pretest": "npm.cmd run compile",
+    "posttest": "npm.cmd run lint"
   },
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",
@@ -15,20 +22,25 @@
     "@react-navigation/native-stack": "^6.9.17",
     "@react-navigation/stack": "^6.3.20",
     "@reduxjs/toolkit": "^2.0.1",
+    "axios": "^1.6.7",
     "expo": "~49.0.15",
     "expo-camera": "~13.4.4",
+    "expo-file-system": "~15.4.5",
     "expo-image-picker": "^14.5.0",
+    "expo-media-library": "~15.4.1",
     "expo-permissions": "~14.2.1",
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.72.6",
     "react-native-web": "~0.19.6",
-    "expo-file-system": "~15.4.5",
-    "expo-media-library": "~15.4.1"
+    "@types/react": "~18.2.14"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "gts": "^5.2.0",
+    "typescript": "~5.2.0",
+    "@types/node": "20.8.2"
   },
   "private": true
 }

@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native';
 import TopBar from './topBar';
+import React from 'react'
 
 export default function Dashboard() {
     return (
         <View style={styles.container}>
-            <TopBar/>
+            <TopBar />
             <View style={styles.mainPane}></View>
         </View>
     );
@@ -12,16 +13,16 @@ export default function Dashboard() {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    mainPane: {
         flex: 1,
-        maxHeight: '1000px',
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
     },
-    });
+    mainPane: {
+        flex: 1,
+        maxHeight: 1000,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+});

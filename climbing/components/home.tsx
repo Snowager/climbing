@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import TopBar from './topBar';
 import CameraButton from './cameraButton';
+import React from 'react'
 
 export default function Home() {
     return (
@@ -20,10 +21,10 @@ const styles = StyleSheet.create({
     },
     mainPane: {
         flex: 1,
-        maxHeight: '1000px',
+        maxHeight: 1000,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'flex-end',
-        paddingBottom: "20px",
+        paddingBottom: 20,
     },
 });

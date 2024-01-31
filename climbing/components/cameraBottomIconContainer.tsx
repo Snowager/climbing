@@ -1,6 +1,8 @@
 import { View, StyleSheet } from "react-native"
+import React from 'react'
+import { AppProps } from "../types/appTypes"
 
-export default function CameraBottomIconContainer({ props, children = null }) {
+export default function CameraBottomIconContainer({ children }: AppProps) {
     return (
         <View style={styles.cameraBottomIconContainer}>
             {children}
