@@ -5,7 +5,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import CameraBottomIconContainer from '../components/cameraBottomIconContainer';
 import PictureButton from '../components/pictureButton';
 import FileSystem from 'expo-file-system';
-import * as MediaLibrary from 'expo-media-library'
+import * as MediaLibrary from 'expo-media-library';
 import { useAlbum } from '../hooks/useAlbum';
 
 export default function PictureView({ navigation }) {

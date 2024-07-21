@@ -4,6 +4,9 @@ import Login from './components/login';
 import Home from './components/home';
 import PictureView from './pages/pictureView';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import overlayView from './pages/overlayView';
+import MobileOverlayView from './pages/mobileOverlayView';
+4
 
 const Tab = createBottomTabNavigator();
 
@@ -23,6 +26,7 @@ export default function App() {
           <Tab.Screen name="Login" component={Login} />
           <Tab.Screen name="Home" component={Home} />
           <Tab.Screen name="Camera" component={PictureView} />
+          <Tab.Screen name="Overlay" component={MobileOverlayView} />
         </Tab.Navigator>
       </NavigationContainer>
       <StatusBar style="light" />
