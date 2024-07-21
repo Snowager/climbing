@@ -12,10 +12,11 @@ export default function MobileOverlayView({navigation}) {
 
     const [overlayFollowToggle, setOverlayFollowToggle] = useState(false)
 
+    const colorArr = ['blue', 'red', 'green', 'yellow']
+
     return (
         <View>
             <TouchableOpacity style={{
-                elevation: (Platform.OS === 'android') ? 50 : 0,
                 zIndex: 5,
             }}
             onPress={(ev) => {

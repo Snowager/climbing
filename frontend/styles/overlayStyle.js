@@ -6,7 +6,7 @@ export const overlayStyle = (overlayFollowToggle, xpos, ypos) => StyleSheet.crea
         width: 100,
         height: 100,
         position: "absolute",
-        top: ypos-100,
+        top: ypos-50,
         left: xpos-50,
     } : 
     {
