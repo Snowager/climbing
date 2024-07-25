@@ -1,13 +1,14 @@
 import { StyleSheet } from "react-native";
 
-export const overlayStyle = (overlayFollowToggle, xpos, ypos) => StyleSheet.create({
+function arrCycle(index, size) {
+    return index+1 % size
+}
+
+export const overlayStyle = (overlayFollowToggle, color) => StyleSheet.create({
     overlay: overlayFollowToggle ? {
-        backgroundColor: "blue",
+        backgroundColor: color,
         width: 100,
         height: 100,
-        position: "absolute",
-        top: ypos-50,
-        left: xpos-50,
     } : 
     {
         backgroundColor: "blue",
