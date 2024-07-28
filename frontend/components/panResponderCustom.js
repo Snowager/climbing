@@ -22,7 +22,7 @@ export default function PanResponderCustom() {
             console.log(longPress.current)
             if (longPress.current === false) {
                 setOverlayFollowToggle(true);
-                setColorindex(value => {
+                setIconIndex(value => {
                 value++;
                 value = value % colorArr.length;
                 return value;
@@ -33,7 +33,7 @@ export default function PanResponderCustom() {
                 clearTimeout(timeLongPress.current);
                 timeLongPress.current = null 
             }
-            console.log(colorIndex);
+            console.log(iconIndex);
             pan.extractOffset();
         },
         }),
@@ -45,14 +45,14 @@ export default function PanResponderCustom() {
 
     const [overlayFollowToggle, setOverlayFollowToggle] = useState(false)
 
-    const colorArr = [
+    const iconArr = [
         require('../assets/overlayMarkers/Button.jpg'), 
         require('../assets/overlayMarkers/hulk.jpg'),
         require('../assets/overlayMarkers/iron_man.jpg'),
         require('../assets/overlayMarkers/black_widow.jpg')
     ]
     
-    const [colorIndex, setColorindex] = useState(0);
+    const [iconIndex, setIconIndex] = useState(0);
 
     const [mousePos, setMousePos] = useState({
         xpos: null,
@@ -75,7 +75,7 @@ export default function PanResponderCustom() {
                     onLongPress={() => {
                         console.log("hit")
                     }}>
-                    <View style={overlayStyle(overlayFollowToggle, ).overlay}><Image source={colorArr[colorIndex]} style={{width:100, height:100}}></Image></View>
+                    <View><Image source={iconArr[iconIndex]} style={{width:100, height:100}}></Image></View>
                 </Pressable>
             </Animated.View>
         </>
