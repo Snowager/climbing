@@ -1,7 +1,6 @@
-import {PanGestureHandler, GestureHandlerRootView} from 'react-native-gesture-handler'
-import { Animated, PanResponder, View, TouchableOpacity, Text, Pressable } from 'react-native'
+import { Animated, PanResponder, View, Pressable , Image} from 'react-native'
 import { overlayStyle } from '../styles/overlayStyle';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 
 export default function PanResponderCustom() {
     const pan = useRef(new Animated.ValueXY()).current;
@@ -13,7 +12,7 @@ export default function PanResponderCustom() {
         onPanResponderGrant: () => {
             timeLongPress.current = setTimeout(() => {
                 longPress.current = true
-            }, 250);
+            }, 50);
         },
         onMoveShouldSetPanResponder: () => true,
         onPanResponderMove: (e, gestureState) => {
@@ -46,7 +45,12 @@ export default function PanResponderCustom() {
 
     const [overlayFollowToggle, setOverlayFollowToggle] = useState(false)
 
-    const colorArr = ['blue', 'red', 'green', 'yellow']
+    const colorArr = [
+        require('../assets/overlayMarkers/Button.jpg'), 
+        require('../assets/overlayMarkers/hulk.jpg'),
+        require('../assets/overlayMarkers/iron_man.jpg'),
+        require('../assets/overlayMarkers/black_widow.jpg')
+    ]
     
     const [colorIndex, setColorindex] = useState(0);
 
@@ -71,7 +75,7 @@ export default function PanResponderCustom() {
                     onLongPress={() => {
                         console.log("hit")
                     }}>
-                    <View style={overlayStyle(overlayFollowToggle, colorArr[colorIndex]).overlay}></View>
+                    <View style={overlayStyle(overlayFollowToggle, ).overlay}><Image source={colorArr[colorIndex]} style={{width:100, height:100}}></Image></View>
                 </Pressable>
             </Animated.View>
         </>
