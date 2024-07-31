@@ -1,11 +1,12 @@
 import { Animated, PanResponder, View, Pressable , Image} from 'react-native'
-import { overlayStyle } from '../styles/overlayStyle';
 import { useRef, useState } from 'react';
 
-export default function PanResponderCustom() {
+export default function PanResponderCustom({setIconState, id, c, list, xpos, ypos}) {
     const pan = useRef(new Animated.ValueXY()).current;
     const longPress = useRef(false)
     const timeLongPress = useRef(null)
+
+    console.log("here")
 
     const panResponder = useRef(
         PanResponder.create({
@@ -19,12 +20,22 @@ export default function PanResponderCustom() {
             Animated.event([null, {dx: pan.x, dy: pan.y}], {useNativeDriver: false})(e, gestureState);
         },
         onPanResponderRelease: () => {
-            console.log(longPress.current)
+            console.log(list)
             if (longPress.current === false) {
                 setOverlayFollowToggle(true);
                 setIconIndex(value => {
                 value++;
-                value = value % colorArr.length;
+                if (value >= iconArr.length) {
+                    list.map((icon, i) => {
+                        if (i===c) {
+                            icon.iconState = !icon.iconState
+                        }
+                    })
+                    setIconState(
+                        list
+                    )
+                }
+                value = value % iconArr.length;
                 return value;
                 });
             }
@@ -40,7 +51,7 @@ export default function PanResponderCustom() {
     ).current;
 
     panResponder.onPanResponderGrant = () => {
-        
+        // --TODO-- grant responder access
     }
 
     const [overlayFollowToggle, setOverlayFollowToggle] = useState(false)
@@ -67,17 +78,15 @@ export default function PanResponderCustom() {
         
 
     return (
-        <>
             <Animated.View style={{
           transform: [{translateX: pan.x}, {translateY: pan.y}],
         }} {...panResponder.panHandlers}>
+        {console.log("position:"+JSON.stringify(pan.x))}
                 <Pressable
                     onLongPress={() => {
                         console.log("hit")
-                    }}>
-                    <View><Image source={iconArr[iconIndex]} style={{width:100, height:100}}></Image></View>
+                    }}><Image source={iconArr[iconIndex]} style={{width:100, height:100, zIndex:10, top:ypos-50, left:xpos-50, position:"absolute"}}></Image>
                 </Pressable>
             </Animated.View>
-        </>
     )
 }
