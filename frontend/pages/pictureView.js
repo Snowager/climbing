@@ -31,7 +31,7 @@ export default function PictureView({ navigation }) {
     }, [])
 
     useEffect(() => {
-        console.log(album)
+        // console.log(album)
     }, [album])
 
     useEffect(() => {
@@ -55,7 +55,6 @@ export default function PictureView({ navigation }) {
             return
         }
         const photo = await camera.takePictureAsync();
-        console.log(photo);
         if (permissionResponse) {
             await MediaLibrary.saveToLibraryAsync(photo.uri);
         }

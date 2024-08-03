@@ -9,20 +9,18 @@ export default function IconListHandler() {
     const xoff = 100
     const yoff = 50
 
-    const [gestureList, setGestureList] = useState([]);
-
     const tapGesture = Gesture.Tap()
         .onStart((e) => {
             let makeIcon = true
-            console.log("tapp")
-            console.log(gestureList)
-            console.log(makeIcon)
+            // console.log("tapp")
+            // console.log(gestureList)
+            // console.log(makeIcon)
             if (iconList.length <= 0) {
                 setCoords({xpos: e.absoluteX, ypos: e.absoluteY})
             }
             for (const icon of iconList) {
-                console.log(`e ${e.absoluteX} e ${e.absoluteY}`)
-                console.log(Math.abs(e.absoluteX - icon.coords.xpos), Math.abs(e.absoluteY - icon.coords.ypos))
+                // console.log(`e ${e.absoluteX} e ${e.absoluteY}`)
+                // console.log(Math.abs(e.absoluteX - icon.coords.xpos), Math.abs(e.absoluteY - icon.coords.ypos))
                 if (Math.abs(e.absoluteX - icon.coords.xpos) < 100 && 
                     Math.abs(e.absoluteY - icon.coords.ypos) < 100) {
                     makeIcon = false
@@ -35,12 +33,8 @@ export default function IconListHandler() {
             .runOnJS(true);
 
     useEffect(() => {
-        if (coords.xpos !== null && coords.xpos !== null) setIconList([...iconList, {coords: coords, iconState: true}]);
+        if (coords.xpos !== null && coords.xpos !== null) setIconList([...iconList, {coords: coords}]);
     }, [coords])
-
-    useEffect(() => {
-        iconList.filter((icon) => {icon.iconState === true})
-    }, [iconList])
 
 
     const ui = useMemo(() => {
@@ -49,17 +43,18 @@ export default function IconListHandler() {
                 <GestureHandlerRootView style={{height: 'fit-content', width: 'fit-content'}}>
                 <GestureDetector gesture={tapGesture}>
                 <Animated.View style={{height:600, width:400, backgroundColor:'yellow'}}>
-                    {console.log(iconList)}
+                    {/* {console.log(iconList)} */}
                     {iconList && iconList.map((icon, i) => {
                         return (
                                 <PanResponderCustom 
                                 key={i} 
+                                id={i}
+                                iconList = {iconList}
+                                setIconList = {setIconList}
                                 xpos={icon.coords.xpos} 
                                 ypos={icon.coords.ypos} 
                                 xoff={xoff} 
                                 yoff={yoff} 
-                                setGestureList={setGestureList} 
-                                gestureList={gestureList}
                                 />
                         )
                     })}

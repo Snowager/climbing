@@ -7,7 +7,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 
-export default function PanResponderCustom({xpos, ypos, xoff, yoff, setGestureList, gestureList}) {
+export default function PanResponderCustom({id, iconList, setIconList, xpos, ypos, xoff, yoff}) {
 
     const position = useSharedValue({x: 0, y: 0});
 
@@ -54,7 +54,7 @@ export default function PanResponderCustom({xpos, ypos, xoff, yoff, setGestureLi
             scale.value = clamp(startScale.value * e.scale, 0.2, 2); 
     }).runOnJS(true)
 
-    const tapGesture = Gesture.Tap().maxDuration(50)
+    const tapGesture = Gesture.Tap().maxDuration(100)
         .onStart((e) => {
             console.log("here")
             setToggle(value => !value);
@@ -65,14 +65,13 @@ export default function PanResponderCustom({xpos, ypos, xoff, yoff, setGestureLi
     useEffect(() => {
         setIconIndex(value => {
             value++;
-            value = value % iconArr.length;
             return value;
             });
+        if (iconIndex >= iconArr.length) {
+            let list = iconList.filter((val, index) => {index !== id})
+            setIconList(list);
+        }
     }, [toggle])
-
-    useEffect(() => {
-        setGestureList([...gestureList, tapGesture])
-    }, [])
 
   
     const animatedStyle = useAnimatedStyle(() => ({
@@ -104,5 +103,6 @@ export default function PanResponderCustom({xpos, ypos, xoff, yoff, setGestureLi
     position: 'absolute',
     height: xoff,
     width: yoff*2,
+    zIndex:12,
     },
   });
