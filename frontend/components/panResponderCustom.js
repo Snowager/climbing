@@ -1,60 +1,24 @@
-import { Animated, PanResponder, View, Pressable , Image} from 'react-native'
-import { useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { StyleSheet, Image } from 'react-native';
+import { Gesture, GestureDetector} from 'react-native-gesture-handler';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+} from 'react-native-reanimated';
 
-export default function PanResponderCustom({setIconState, id, c, list, xpos, ypos}) {
-    const pan = useRef(new Animated.ValueXY()).current;
-    const longPress = useRef(false)
-    const timeLongPress = useRef(null)
 
-    console.log("here")
+export default function PanResponderCustom({xpos, ypos, xoff, yoff, setGestureList, gestureList}) {
 
-    const panResponder = useRef(
-        PanResponder.create({
-        onPanResponderGrant: () => {
-            timeLongPress.current = setTimeout(() => {
-                longPress.current = true
-            }, 50);
-        },
-        onMoveShouldSetPanResponder: () => true,
-        onPanResponderMove: (e, gestureState) => {
-            Animated.event([null, {dx: pan.x, dy: pan.y}], {useNativeDriver: false})(e, gestureState);
-        },
-        onPanResponderRelease: () => {
-            console.log(list)
-            if (longPress.current === false) {
-                setOverlayFollowToggle(true);
-                setIconIndex(value => {
-                value++;
-                if (value >= iconArr.length) {
-                    list.map((icon, i) => {
-                        if (i===c) {
-                            icon.iconState = !icon.iconState
-                        }
-                    })
-                    setIconState(
-                        list
-                    )
-                }
-                value = value % iconArr.length;
-                return value;
-                });
-            }
-            longPress.current = false
-            if (timeLongPress.current) {
-                clearTimeout(timeLongPress.current);
-                timeLongPress.current = null 
-            }
-            console.log(iconIndex);
-            pan.extractOffset();
-        },
-        }),
-    ).current;
+    const position = useSharedValue({x: 0, y: 0});
 
-    panResponder.onPanResponderGrant = () => {
-        // --TODO-- grant responder access
-    }
+    const xTranslate = useSharedValue(xpos-xoff);
+    const yTranslate = useSharedValue(ypos-(yoff*2));
 
-    const [overlayFollowToggle, setOverlayFollowToggle] = useState(false)
+    const startScale = useSharedValue(1);
+    const scale = useSharedValue(1);
+
+    const xrot = useSharedValue(0);
+    const yrot = useSharedValue(0);
 
     const iconArr = [
         require('../assets/overlayMarkers/Button.jpg'), 
@@ -62,31 +26,83 @@ export default function PanResponderCustom({setIconState, id, c, list, xpos, ypo
         require('../assets/overlayMarkers/iron_man.jpg'),
         require('../assets/overlayMarkers/black_widow.jpg')
     ]
+
+    const [toggle, setToggle] = useState(false)
     
     const [iconIndex, setIconIndex] = useState(0);
 
-    const [mousePos, setMousePos] = useState({
-        xpos: null,
-        ypos: null,
-    })
+    function clamp(val, min, max) {
+        return Math.min(Math.max(val, min), max)
+    }
+  
+    const panGesture = Gesture.Pan()
+        .onStart((e) => {
+            position.value.x = xTranslate.value;
+            position.value.y = yTranslate.value;
+        })
+        .onUpdate((e) => {
+            xTranslate.value = e.translationX + position.value.x;
+            yTranslate.value = e.translationY + position.value.y;
+            console.log("panning")
+        }).runOnJS(true);
 
-    const [prevMousePos, setPrevMousePos] = useState({
-        xpos: null,
-        ypos: null,
-    })
+    const pinchGesture = Gesture.Pinch()
+        .onStart((e) => {
+            startScale.value = scale.value;
+        })
+        .onUpdate((e) => {
+            scale.value = clamp(startScale.value * e.scale, 0.2, 2); 
+    }).runOnJS(true)
 
-        
+    const tapGesture = Gesture.Tap().maxDuration(50)
+        .onStart((e) => {
+            console.log("here")
+            setToggle(value => !value);
+        }).runOnJS(true)
 
+    const composeGesture = Gesture.Simultaneous(pinchGesture, panGesture, tapGesture)
+
+    useEffect(() => {
+        setIconIndex(value => {
+            value++;
+            value = value % iconArr.length;
+            return value;
+            });
+    }, [toggle])
+
+    useEffect(() => {
+        setGestureList([...gestureList, tapGesture])
+    }, [])
+
+  
+    const animatedStyle = useAnimatedStyle(() => ({
+      transform: [{ translateX: xTranslate.value }, { translateY: yTranslate.value }, { scale: scale.value }],
+      height: xoff,
+      width: yoff*2,
+      position: 'absolute'
+    }));
+
+    const ui = useMemo(() => {
+        return (
+            <GestureDetector gesture={composeGesture}>
+              <Animated.View style={[animatedStyle]}>
+                  <Image source={iconArr[iconIndex]} style={styles(xoff, yoff).box} />
+              </Animated.View>
+            </GestureDetector>
+          );
+    }, [iconIndex])
+  
     return (
-            <Animated.View style={{
-          transform: [{translateX: pan.x}, {translateY: pan.y}],
-        }} {...panResponder.panHandlers}>
-        {console.log("position:"+JSON.stringify(pan.x))}
-                <Pressable
-                    onLongPress={() => {
-                        console.log("hit")
-                    }}><Image source={iconArr[iconIndex]} style={{width:100, height:100, zIndex:10, top:ypos-50, left:xpos-50, position:"absolute"}}></Image>
-                </Pressable>
-            </Animated.View>
+        <>
+            {ui}
+        </>
     )
-}
+    
+  }
+  const styles = (xoff, yoff) => StyleSheet.create({
+    box: {
+    position: 'absolute',
+    height: xoff,
+    width: yoff*2,
+    },
+  });

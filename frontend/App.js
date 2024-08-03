@@ -1,11 +1,13 @@
+import 'react-native-gesture-handler'
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import Login from './components/login';
 import Home from './components/home';
 import PictureView from './pages/pictureView';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import overlayView from './pages/overlayView';
+//import overlayView from './pages/overlayView';
 import MobileOverlayView from './pages/mobileOverlayView';
+
 4
 
 const Tab = createBottomTabNavigator();
