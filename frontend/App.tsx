@@ -7,11 +7,16 @@ import PictureView from './pages/pictureView';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 //import overlayView from './pages/overlayView';
 import MobileOverlayView from './pages/mobileOverlayView';
+import { createStackNavigator } from '@react-navigation/stack';
 
-4
+const Tab = createBottomTabNavigator<RootStackParamList>();
 
-const Tab = createBottomTabNavigator();
-
+export type RootStackParamList = {
+  Home: undefined,
+  Login: undefined,
+  Camera: undefined,
+  Overlay: undefined,
+}
 
 export default function App() {
   return (

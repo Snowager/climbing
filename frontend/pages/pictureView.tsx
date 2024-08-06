@@ -1,14 +1,21 @@
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
 import CameraButton from '../components/cameraButton';
 import React, { useEffect, useMemo, useState } from 'react';
 import CameraBottomIconContainer from '../components/cameraBottomIconContainer';
 import PictureButton from '../components/pictureButton';
-import FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
 import { useAlbum } from '../hooks/useAlbum';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { RootStackParamList } from '../App';
 
-export default function PictureView({ navigation }) {
+type NavigationProps = BottomTabNavigationProp<RootStackParamList, 'Camera'>
+
+type Props = {
+    navigation: NavigationProps
+}
+
+export default function PictureView({ navigation }: Props) {
     const [cameraLoad, setCameraLoad] = useState(false);
     const [camera, setCamera] = useState(null);
     const [cameraType, setCameraType] = useState(CameraType.back);
