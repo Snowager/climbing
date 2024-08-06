@@ -26,7 +26,7 @@ export default function PictureView({ navigation }: Props) {
 
     const album = useAlbum(albumName);
 
-    async function permissionFunction(): Promise<any> {
+    async function permissionFunction(): Promise<void> {
         const permission = await Camera.requestCameraPermissionsAsync();
         if (permission.granted) {
             setStaticPermission(true);
@@ -53,7 +53,7 @@ export default function PictureView({ navigation }: Props) {
         })
     }, [])
 
-    function flipCamera() {
+    function flipCamera(): void {
         setCameraType(cameraType == CameraType.back ? CameraType.front : CameraType.back)
     }
 
