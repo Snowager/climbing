@@ -11,7 +11,7 @@ import { useAlbum } from '../hooks/useAlbum';
 export default function PictureView({ navigation }) {
     const [cameraLoad, setCameraLoad] = useState(false);
     const [camera, setCamera] = useState(null);
-    const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
+    const [cameraType, setCameraType] = useState(CameraType.back);
     const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
     const [staticPermission, setStaticPermission] = useState(false);
     const [albumName, setAlbumName] = useState("Hair");
@@ -19,7 +19,7 @@ export default function PictureView({ navigation }) {
 
     const album = useAlbum(albumName);
 
-    permissionFunction = async () => {
+    async function permissionFunction(): Promise<any> {
         const permission = await Camera.requestCameraPermissionsAsync();
         if (permission.granted) {
             setStaticPermission(true);
@@ -47,10 +47,10 @@ export default function PictureView({ navigation }) {
     }, [])
 
     function flipCamera() {
-        setCameraType(cameraType == Camera.Constants.Type.back ? Camera.Constants.Type.front : Camera.Constants.Type.back)
+        setCameraType(cameraType == CameraType.back ? CameraType.front : CameraType.back)
     }
 
-    async function takePicture() {
+    async function takePicture(): Promise<void> {
         if (!camera) {
             return
         }
@@ -71,7 +71,7 @@ export default function PictureView({ navigation }) {
                 :
                 <View style={styles.mainPane}>
                     {cameraLoad &&
-                        <Camera style={styles.camera} type={cameraType} ratio={'4:3'} ref={(ref) => setCamera(ref)} t>
+                        <Camera style={styles.camera} type={cameraType} ratio={'4:3'} ref={(ref) => setCamera(ref)}>
                             <CameraBottomIconContainer>
                                 <PictureButton onPress={takePicture} />
                                 <CameraButton onPress={flipCamera} />

@@ -1,7 +1,11 @@
+import { ReactElement } from "react";
 import { Pressable, StyleSheet, View, Dimensions } from "react-native";
 
-export default function CameraButton({ onPress }) {
+type Props = {
+    onPress: Function
+}
 
+export default function CameraButton({ onPress }): ReactElement<Props> {
     return (
         <View style={styles.cameraButtonContainer}>
             <Pressable style={styles.cameraButton} onPress={onPress}></Pressable>
