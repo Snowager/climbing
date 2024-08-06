@@ -7,7 +7,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 
-export default function PanResponderCustom({id, iconList, setIconList, xpos, ypos, xoff, yoff}) {
+export default function PanResponderCustom({id, iconList, setIconList, xpos = 0, ypos = 0, xoff = 100, yoff = 50}) {
 
     const position = useSharedValue({x: 0, y: 0});
 

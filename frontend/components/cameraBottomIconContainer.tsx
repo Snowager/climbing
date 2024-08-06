@@ -1,6 +1,7 @@
+import React, { ReactElement } from "react"
 import { View, StyleSheet } from "react-native"
 
-export default function CameraBottomIconContainer({ props, children = null }) {
+export default function CameraBottomIconContainer ({ children = null }): ReactElement {
     return (
         <View style={styles.cameraBottomIconContainer}>
             {children}
