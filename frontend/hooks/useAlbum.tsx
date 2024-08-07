@@ -1,9 +1,13 @@
 import FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
 import * as Permissions from 'expo-permissions';
-import { useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 
-export async function useAlbum(albumName) {
+export interface nameProp {
+    albumName: string
+}
+
+export async function useAlbum(albumName): Promise<ReactElement<nameProp>>  {
     const [album, setAlbum] = useState(null);
 
     useEffect(() => {
