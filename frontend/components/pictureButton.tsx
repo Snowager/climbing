@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, View, Dimensions } from "react-native";
+import { ReactElement } from 'react';
 
-export interface OnPressProp = {
+export interface OnPressProp {
     onPress: ()=>void
 }
 
