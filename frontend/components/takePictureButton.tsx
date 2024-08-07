@@ -5,7 +5,7 @@ export interface OnPressProp {
     onPress: ()=>void
 }
 
-export default function PictureButton({ onPress = () => {} }): ReactElement<OnPressProp> {
+export default function TakePictureButton({ onPress = () => {} }): ReactElement<OnPressProp> {
 
     return (
         <View style={styles.cameraButtonContainer}>

@@ -5,7 +5,8 @@ type Props = {
     onPress: Function
 }
 
-export default function CameraButton({ onPress }): ReactElement<Props> {
+
+export default function FlipCameraButton({ onPress }): ReactElement<Props> {
     return (
         <View style={styles.cameraButtonContainer}>
             <Pressable style={styles.cameraButton} onPress={onPress}></Pressable>
