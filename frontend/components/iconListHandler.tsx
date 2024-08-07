@@ -1,15 +1,24 @@
-import { useEffect, useState, useMemo, useRef } from "react"
+import { useEffect, useState, useMemo, useRef, ReactElement } from "react"
 import { View, Animated } from "react-native"
 import PanResponderCustom from "./panResponderCustom"
-import { GestureHandlerRootView, Gesture, GestureDetector } from "react-native-gesture-handler"
+import { GestureHandlerRootView, Gesture, GestureDetector, TapGesture } from "react-native-gesture-handler"
 
-export default function IconListHandler() {
-    const [iconList, setIconList] = useState([])
-    const [coords, setCoords] = useState({xpos: null, ypos: null})
-    const xoff = 100
-    const yoff = 50
+export interface Coord {
+    xpos: number,
+    ypos: number
+}
 
-    const tapGesture = Gesture.Tap()
+export interface Icon {
+    coords: Coord
+}
+
+export default function IconListHandler(): ReactElement {
+    const [iconList, setIconList] = useState<Icon[]>([])
+    const [coords, setCoords] = useState<Coord>({xpos: null, ypos: null})
+    const xoff: number = 100
+    const yoff: number = 50
+
+    const tapGesture: TapGesture = Gesture.Tap()
         .onStart((e) => {
             let makeIcon = true
             // console.log("tapp")
@@ -40,7 +49,7 @@ export default function IconListHandler() {
     const ui = useMemo(() => {
         return (
                 <View>
-                <GestureHandlerRootView style={{height: 'fit-content', width: 'fit-content'}}>
+                <GestureHandlerRootView style={{height: '100%', width: '100%'}}>
                 <GestureDetector gesture={tapGesture}>
                 <Animated.View style={{height:600, width:400, backgroundColor:'yellow'}}>
                     {/* {console.log(iconList)} */}
