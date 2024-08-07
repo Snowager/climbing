@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import TopBar from './topBar';
+import { ReactElement } from 'react';
 
-export default function Login({navigation}) {
+export default function Dashboard(): ReactElement {
     return (
         <View style={styles.container}>
             <TopBar/>
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
     },
     mainPane: {
         flex: 1,
-        maxHeight: '1000px',
+        maxHeight: 1000,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',

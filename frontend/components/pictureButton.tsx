@@ -1,6 +1,11 @@
 import { Pressable, StyleSheet, View, Dimensions } from "react-native";
+import { ReactElement } from 'react';
 
-export default function PictureButton({ onPress }) {
+export interface OnPressProp {
+    onPress: ()=>void
+}
+
+export default function PictureButton({ onPress = () => {} }): ReactElement<OnPressProp> {
 
     return (
         <View style={styles.cameraButtonContainer}>

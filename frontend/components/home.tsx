@@ -1,8 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import TopBar from './topBar';
-import CameraButton from './cameraButton';
+import { ReactElement } from 'react';
 
-export default function Home() {
+export default function Home(): ReactElement {
     return (
         <View style={styles.container}>
             <TopBar />
@@ -20,10 +20,10 @@ const styles = StyleSheet.create({
     },
     mainPane: {
         flex: 1,
-        maxHeight: '1000px',
+        maxHeight: 1000,
         backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'flex-end',
-        paddingBottom: "20px",
+        paddingBottom: 20,
     },
 });

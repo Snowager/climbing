@@ -1,6 +1,11 @@
+import { ReactElement } from 'react';
 import { StyleSheet, View, Pressable, Text } from 'react-native';
 
-export default function ClimbButton({ buttonText }) {
+type ClimbButtonProps = {
+  buttonText: string
+}
+
+export default function ClimbButton({ buttonText }: ClimbButtonProps): ReactElement<ClimbButtonProps> {
   return (
     <View style={styles.buttonContainer}>
       <Pressable style={styles.button} onPress={() => alert('You pressed a button.')}>
