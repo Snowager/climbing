@@ -1,18 +1,27 @@
-import { useEffect, useMemo, useState } from 'react';
+import { ReactElement, SetStateAction, useEffect, useMemo, useState } from 'react';
 import { StyleSheet, Image } from 'react-native';
-import { Gesture, GestureDetector} from 'react-native-gesture-handler';
+import { Gesture, GestureDetector, PanGesture, PinchGesture, SimultaneousGesture, TapGesture} from 'react-native-gesture-handler';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
 } from 'react-native-reanimated';
+import { Icon } from './iconListHandler';
+
+export interface iconGestureProps {
+    id: number,
+    iconList: Icon[],
+    setIconList: SetStateAction<Icon[]>,
+    xpos, ypos: number,
+    xoff, yoff: number,
+}
 
 
-export default function OverlayIconGestureHandler({id, iconList, setIconList, xpos = 0, ypos = 0, xoff = 100, yoff = 50}) {
+export default function OverlayIconGestureHandler({id, iconList, setIconList, xpos = 0, ypos = 0, xoff = 100, yoff = 50}): ReactElement<iconGestureProps> {
 
-    const position = useSharedValue({x: 0, y: 0});
+    const position = useSharedValue<{x:number, y:number}>({x: 0, y: 0});
 
-    const xTranslate = useSharedValue(xpos-xoff);
-    const yTranslate = useSharedValue(ypos-(yoff*2));
+    const xTranslate = useSharedValue<number>(xpos-xoff);
+    const yTranslate = useSharedValue<number>(ypos-(yoff*2));
 
     const startScale = useSharedValue(1);
     const scale = useSharedValue(1);
@@ -31,11 +40,11 @@ export default function OverlayIconGestureHandler({id, iconList, setIconList, xp
     
     const [iconIndex, setIconIndex] = useState(0);
 
-    function clamp(val, min, max) {
+    function clamp(val: number, min: number, max: number): number {
         return Math.min(Math.max(val, min), max)
     }
   
-    const panGesture = Gesture.Pan()
+    const panGesture: PanGesture = Gesture.Pan()
         .onStart((e) => {
             position.value.x = xTranslate.value;
             position.value.y = yTranslate.value;
@@ -46,7 +55,7 @@ export default function OverlayIconGestureHandler({id, iconList, setIconList, xp
             console.log("panning")
         }).runOnJS(true);
 
-    const pinchGesture = Gesture.Pinch()
+    const pinchGesture: PinchGesture = Gesture.Pinch()
         .onStart((e) => {
             startScale.value = scale.value;
         })
@@ -54,13 +63,13 @@ export default function OverlayIconGestureHandler({id, iconList, setIconList, xp
             scale.value = clamp(startScale.value * e.scale, 0.2, 2); 
     }).runOnJS(true)
 
-    const tapGesture = Gesture.Tap().maxDuration(100)
+    const tapGesture: TapGesture = Gesture.Tap().maxDuration(100)
         .onStart((e) => {
             console.log("here")
             setToggle(value => !value);
         }).runOnJS(true)
 
-    const composeGesture = Gesture.Simultaneous(pinchGesture, panGesture, tapGesture)
+    const composeGesture: SimultaneousGesture = Gesture.Simultaneous(pinchGesture, panGesture, tapGesture)
 
     useEffect(() => {
         setIconIndex(value => {
@@ -98,7 +107,7 @@ export default function OverlayIconGestureHandler({id, iconList, setIconList, xp
     )
     
   }
-  const styles = (xoff, yoff) => StyleSheet.create({
+  const styles = (xoff: number, yoff: number) => StyleSheet.create({
     box: {
     position: 'absolute',
     height: xoff,
