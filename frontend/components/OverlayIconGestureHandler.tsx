@@ -23,11 +23,11 @@ export default function OverlayIconGestureHandler({id, iconList, setIconList, xp
     const xTranslate = useSharedValue<number>(xpos-xoff);
     const yTranslate = useSharedValue<number>(ypos-(yoff*2));
 
-    const startScale = useSharedValue(1);
-    const scale = useSharedValue(1);
+    const startScale = useSharedValue<number>(1);
+    const scale = useSharedValue<number>(1);
 
-    const xrot = useSharedValue(0);
-    const yrot = useSharedValue(0);
+    const xrot = useSharedValue<number>(0);
+    const yrot = useSharedValue<number>(0);
 
     const iconArr = [
         require('../assets/overlayMarkers/Button.jpg'), 
