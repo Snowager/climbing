@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo, useRef, ReactElement } from "react"
 import { View, Animated } from "react-native"
-import PanResponderCustom from "./OverlayIconGestureHandler"
+import OverlayIconGestureHandler from "./OverlayIconGestureHandler"
 import { GestureHandlerRootView, Gesture, GestureDetector, TapGesture } from "react-native-gesture-handler"
 
 export interface Coord {
@@ -55,7 +55,7 @@ export default function IconListHandler(): ReactElement {
                     {/* {console.log(iconList)} */}
                     {iconList && iconList.map((icon, i) => {
                         return (
-                                <PanResponderCustom 
+                                <OverlayIconGestureHandler 
                                 key={i} 
                                 id={i}
                                 iconList = {iconList}
