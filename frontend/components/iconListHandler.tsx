@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo, useRef, ReactElement } from "react"
 import { View, Animated } from "react-native"
-import PanResponderCustom from "./panResponderCustom"
+import PanResponderCustom from "./OverlayIconGestureHandler"
 import { GestureHandlerRootView, Gesture, GestureDetector, TapGesture } from "react-native-gesture-handler"
 
 export interface Coord {
