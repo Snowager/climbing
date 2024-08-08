@@ -7,7 +7,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Icon } from './iconListHandler';
 
-export interface iconGestureProps {
+export interface IconGestureProps {
     id: number,
     iconList: Icon[],
     setIconList: SetStateAction<Icon[]>,
@@ -15,8 +15,11 @@ export interface iconGestureProps {
     xoff, yoff: number,
 }
 
-
-export default function OverlayIconGestureHandler({id, iconList, setIconList, xpos = 0, ypos = 0, xoff = 100, yoff = 50}): ReactElement<iconGestureProps> {
+// Gesture handler for the overlay icon system.
+// Tapping: cycles through icon images
+// Pinching: expands and contrasts icon that is touched
+// Panning: Moves icon to new location on screen --TODO-- update icon coordinates within iconList because of position bug
+export default function OverlayIconGestureHandler({id, iconList, setIconList, xpos = 0, ypos = 0, xoff = 100, yoff = 50}): ReactElement<IconGestureProps> {
 
     const position = useSharedValue<{x:number, y:number}>({x: 0, y: 0});
 
@@ -69,8 +72,11 @@ export default function OverlayIconGestureHandler({id, iconList, setIconList, xp
             setToggle(value => !value);
         }).runOnJS(true)
 
+    // Ensures that gestures can occur simultaneously and not exclude when interrupting
     const composeGesture: SimultaneousGesture = Gesture.Simultaneous(pinchGesture, panGesture, tapGesture)
 
+    // uses a toggle as indicator to change the iconIndex and filters based on index and id matching for 
+    // iconList
     useEffect(() => {
         setIconIndex(value => {
             value++;
