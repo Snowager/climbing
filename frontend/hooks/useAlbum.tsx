@@ -7,6 +7,7 @@ export interface nameProp {
     albumName: string
 }
 
+// Hook that async returns an existing album on the user's android phone
 export async function useAlbum(albumName): Promise<ReactElement<nameProp>>  {
     const [album, setAlbum] = useState(null);
 
