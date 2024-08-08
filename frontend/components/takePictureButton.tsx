@@ -5,6 +5,7 @@ export interface OnPressProp {
     onPress: ()=>void
 }
 
+// Picture Button for taking a photo --TODO-- add a handler for updating picture taken state managed upstream
 export default function TakePictureButton({ onPress = () => {} }): ReactElement<OnPressProp> {
 
     return (
