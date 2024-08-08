@@ -2,6 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import TopBar from './topBar';
 import { ReactElement } from 'react';
 
+// View pane for the home page screen
 export default function Home(): ReactElement {
     return (
         <View style={styles.container}>
