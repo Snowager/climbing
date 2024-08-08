@@ -1,6 +1,10 @@
 import { ReactElement } from 'react';
 import { StyleSheet, View, Pressable, Text } from 'react-native';
 
+
+// Currently unused
+
+
 type ClimbButtonProps = {
   buttonText: string
 }
