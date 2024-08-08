@@ -10,6 +10,7 @@ type Props = {
     navigation: NavigationProps
 }
 
+// Login page component --TODO-- implement login functionality in later sprint task
 export default function Login({navigation}): ReactElement<Props> {
     return (
         <View style={styles.container}>
