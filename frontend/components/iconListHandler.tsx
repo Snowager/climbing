@@ -3,11 +3,14 @@ import { View, Animated } from "react-native"
 import OverlayIconGestureHandler from "./OverlayIconGestureHandler"
 import { GestureHandlerRootView, Gesture, GestureDetector, TapGesture } from "react-native-gesture-handler"
 
+
+// interface for icon position coords
 export interface Coord {
     xpos: number,
     ypos: number
 }
 
+// interface for an icon object
 export interface Icon {
     coords: Coord
 }
@@ -18,18 +21,19 @@ export default function IconListHandler(): ReactElement {
     const xoff: number = 100
     const yoff: number = 50
 
+    
+    // Controls tapping on the screen for generating an icon
     const tapGesture: TapGesture = Gesture.Tap()
         .onStart((e) => {
             let makeIcon = true
-            // console.log("tapp")
-            // console.log(gestureList)
-            // console.log(makeIcon)
+            
+            // Generates an icon for first tap moving to screen
             if (iconList.length <= 0) {
                 setCoords({xpos: e.absoluteX, ypos: e.absoluteY})
             }
+            // ensures another icon can't be produced when tapping on a location within 
+            //specified amount from the icons coordinates
             for (const icon of iconList) {
-                // console.log(`e ${e.absoluteX} e ${e.absoluteY}`)
-                // console.log(Math.abs(e.absoluteX - icon.coords.xpos), Math.abs(e.absoluteY - icon.coords.ypos))
                 if (Math.abs(e.absoluteX - icon.coords.xpos) < 100 && 
                     Math.abs(e.absoluteY - icon.coords.ypos) < 100) {
                     makeIcon = false
@@ -39,13 +43,15 @@ export default function IconListHandler(): ReactElement {
                 setCoords({xpos: e.absoluteX, ypos: e.absoluteY})
             }
             })
-            .runOnJS(true);
+            .runOnJS(true); // needs to run on JS thread for React states
 
     useEffect(() => {
         if (coords.xpos !== null && coords.xpos !== null) setIconList([...iconList, {coords: coords}]);
     }, [coords])
 
 
+    // Gesture detector works on the animated view below
+    // Detects initial tap for generating icons
     const ui = useMemo(() => {
         return (
                 <View>
