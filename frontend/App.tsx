@@ -7,8 +7,8 @@ import PictureView from './pages/pictureView';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 //import overlayView from './pages/overlayView';
 import MobileOverlayView from './pages/mobileOverlayView';
-import { createStackNavigator } from '@react-navigation/stack';
 
+// 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 
 export type RootStackParamList = {
@@ -18,6 +18,7 @@ export type RootStackParamList = {
   Overlay: undefined,
 }
 
+// Root point for the Climbing UI Notes App (Possible name - Beta Trackr ?)
 export default function App() {
   return (
     <>

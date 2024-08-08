@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+// TopBar component for displaying a top bar
 export default function TopBar(): ReactElement {
   return (
     <View style={styles.topBar}>

@@ -5,7 +5,9 @@ type Props = {
     onPress: Function
 }
 
-export default function CameraButton({ onPress }): ReactElement<Props> {
+// Button for flipping the camera to a selfie perspective
+// Onpress changes camera enum from front to back
+export default function FlipCameraButton({ onPress }): ReactElement<Props> {
     return (
         <View style={styles.cameraButtonContainer}>
             <Pressable style={styles.cameraButton} onPress={onPress}></Pressable>

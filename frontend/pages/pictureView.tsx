@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Camera, CameraType } from 'expo-camera';
-import CameraButton from '../components/cameraButton';
+import FlipCameraButton from '../components/flipCameraButton';
 import React, { useEffect, useMemo, useState } from 'react';
 import CameraBottomIconContainer from '../components/cameraBottomIconContainer';
-import PictureButton from '../components/pictureButton';
+import TakePictureButton from '../components/takePictureButton';
 import * as MediaLibrary from 'expo-media-library';
 import { useAlbum } from '../hooks/useAlbum';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
@@ -15,6 +15,9 @@ type Props = {
     navigation: NavigationProps
 }
 
+// View pane for the PictureView
+// --TODO-- move logic downstream to handler component(s),
+// Need to break up responsibility at some point
 export default function PictureView({ navigation }: Props) {
     const [cameraLoad, setCameraLoad] = useState(false);
     const [camera, setCamera] = useState(null);
@@ -80,8 +83,8 @@ export default function PictureView({ navigation }: Props) {
                     {cameraLoad &&
                         <Camera style={styles.camera} type={cameraType} ratio={'4:3'} ref={(ref) => setCamera(ref)}>
                             <CameraBottomIconContainer>
-                                <PictureButton onPress={takePicture} />
-                                <CameraButton onPress={flipCamera} />
+                                <TakePictureButton onPress={takePicture} />
+                                <FlipCameraButton onPress={flipCamera} />
                             </CameraBottomIconContainer>
                         </Camera>}
                 </View>

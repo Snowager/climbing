@@ -1,6 +1,8 @@
 import React, { ReactElement } from "react"
 import { View, StyleSheet } from "react-native"
 
+
+// Container component for the bottom icons on the camera page
 export default function CameraBottomIconContainer ({ children = null }): ReactElement {
     return (
         <View style={styles.cameraBottomIconContainer}>
