@@ -15,6 +15,9 @@ type Props = {
     navigation: NavigationProps
 }
 
+// View pane for the PictureView
+// --TODO-- move logic downstream to handler component(s),
+// Need to break up responsibility at some point
 export default function PictureView({ navigation }: Props) {
     const [cameraLoad, setCameraLoad] = useState(false);
     const [camera, setCamera] = useState(null);
