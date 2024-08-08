@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo, useRef, ReactElement } from "react"
 import { View, Animated } from "react-native"
-import OverlayIconGestureHandler from "./OverlayIconGestureHandler"
+import OverlayIconGestureHandler from "./overlayIconGestureHandler"
 import { GestureHandlerRootView, Gesture, GestureDetector, TapGesture } from "react-native-gesture-handler"
 
 

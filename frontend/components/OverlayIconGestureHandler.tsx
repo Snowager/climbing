@@ -16,7 +16,7 @@ export interface IconGestureProps {
 }
 
 // Gesture handler for the overlay icon system.
-// Tapping: cycles through icon images
+// Tapping: cycles through different icon images --TODO-- change temp images to custom assets
 // Pinching: expands and contrasts icon that is touched
 // Panning: Moves icon to new location on screen --TODO-- update icon coordinates within iconList because of position bug
 export default function OverlayIconGestureHandler({id, iconList, setIconList, xpos = 0, ypos = 0, xoff = 100, yoff = 50}): ReactElement<IconGestureProps> {
