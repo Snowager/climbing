@@ -6,26 +6,23 @@ import CameraBottomIconContainer from '../components/cameraBottomIconContainer';
 import TakePictureButton from '../components/takePictureButton';
 import * as MediaLibrary from 'expo-media-library';
 import { useAlbum } from '../hooks/useAlbum';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { RootStackParamList } from '../App';
+import { RootStackParamList} from '../App';
+import { LatestPhotoContainer } from '../components/latestPhotosContainer';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
-type NavigationProps = BottomTabNavigationProp<RootStackParamList, 'Camera'>
-
-type Props = {
-    navigation: NavigationProps
-}
+type Props = NativeStackScreenProps<RootStackParamList, 'Camera'>
 
 // View pane for the PictureView
 // --TODO-- move logic downstream to handler component(s),
 // Need to break up responsibility at some point
-export default function PictureView({ navigation }: Props) {
+export default function PictureView({ route, navigation }: Props) {
     const [cameraLoad, setCameraLoad] = useState(false);
     const [camera, setCamera] = useState(null);
     const [cameraType, setCameraType] = useState(CameraType.back);
     const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
     const [staticPermission, setStaticPermission] = useState(false);
     const [albumName, setAlbumName] = useState("Hair");
-
 
     const album = useAlbum(albumName);
 
@@ -70,6 +67,15 @@ export default function PictureView({ navigation }: Props) {
         }
     }
 
+    function handleNavigate(image) {
+        console.log(image)
+        if (image) {
+            navigation.navigate('Overlay', {
+                uri: image,
+            })
+        }
+    }
+
 
     const gui = useMemo(() => {
         return (
@@ -87,6 +93,7 @@ export default function PictureView({ navigation }: Props) {
                                 <FlipCameraButton onPress={flipCamera} />
                             </CameraBottomIconContainer>
                         </Camera>}
+                        <LatestPhotoContainer handleNavigate={handleNavigate}/>
                 </View>
         )
     }, [camera, cameraType, staticPermission, cameraLoad]
@@ -106,7 +113,7 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     camera: {
-        height: "100%",
+        height: "90%",
         justifyContent: 'flex-end',
         alignItems: 'center',
     }
