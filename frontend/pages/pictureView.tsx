@@ -10,6 +10,7 @@ import { RootStackParamList} from '../App';
 import { LatestPhotoContainer } from '../components/latestPhotosContainer';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
+import { CameraHandler } from '../components/cameraHandler';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Camera'>
 
@@ -17,104 +18,8 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Camera'>
 // --TODO-- move logic downstream to handler component(s),
 // Need to break up responsibility at some point
 export default function PictureView({ route, navigation }: Props) {
-    const [cameraLoad, setCameraLoad] = useState(false);
-    const [camera, setCamera] = useState(null);
-    const [cameraType, setCameraType] = useState(CameraType.back);
-    const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
-    const [staticPermission, setStaticPermission] = useState(false);
-    const [albumName, setAlbumName] = useState("Hair");
-
-    const album = useAlbum(albumName);
-
-    async function permissionFunction(): Promise<void> {
-        const permission = await Camera.requestCameraPermissionsAsync();
-        if (permission.granted) {
-            setStaticPermission(true);
-        }
-    }
-
-    useEffect(() => {
-        permissionFunction();
-    }, [])
-
-    useEffect(() => {
-        // console.log(album)
-    }, [album])
-
-    useEffect(() => {
-        navigation.addListener('focus', () => {
-            setCameraLoad(true)
-        })
-    }, [])
-
-    useEffect(() => {
-        navigation.addListener('blur', () => {
-            setCameraLoad(false)
-        })
-    }, [])
-
-    function flipCamera(): void {
-        setCameraType(cameraType == CameraType.back ? CameraType.front : CameraType.back)
-    }
-
-    async function takePicture(): Promise<void> {
-        if (!camera) {
-            return
-        }
-        const photo = await camera.takePictureAsync();
-        if (permissionResponse) {
-            await MediaLibrary.saveToLibraryAsync(photo.uri);
-        }
-    }
-
-    function handleNavigate(image) {
-        console.log(image)
-        if (image) {
-            navigation.navigate('Overlay', {
-                uri: image,
-            })
-        }
-    }
-
-
-    const gui = useMemo(() => {
-        return (
-            !staticPermission ?
-                // Camera permissions are still loading
-                <View>
-                    <Text>Nothing</Text>
-                </View>
-                :
-                <View style={styles.mainPane}>
-                    {cameraLoad &&
-                        <Camera style={styles.camera} type={cameraType} ratio={'4:3'} ref={(ref) => setCamera(ref)}>
-                            <CameraBottomIconContainer>
-                                <TakePictureButton onPress={takePicture} />
-                                <FlipCameraButton onPress={flipCamera} />
-                            </CameraBottomIconContainer>
-                        </Camera>}
-                        <LatestPhotoContainer handleNavigate={handleNavigate}/>
-                </View>
-        )
-    }, [camera, cameraType, staticPermission, cameraLoad]
-    )
 
     return (
-        gui
+        <CameraHandler navigation={navigation} />
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    mainPane: {
-        flex: 1,
-        width: "100%",
-    },
-    camera: {
-        height: "90%",
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-    }
-});
