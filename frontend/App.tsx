@@ -15,7 +15,7 @@ export type RootStackParamList = {
   Home: undefined,
   Login: undefined,
   Camera: undefined,
-  Overlay: undefined,
+  Overlay: {uri: string},
 }
 
 // Root point for the Climbing UI Notes App (Possible name - Beta Trackr ?)
