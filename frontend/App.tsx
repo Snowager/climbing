@@ -7,6 +7,8 @@ import PictureView from './pages/pictureView';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 //import overlayView from './pages/overlayView';
 import MobileOverlayView from './pages/mobileOverlayView';
+import * as MediaLibrary from 'expo-media-library'
+import { Dimensions, View } from 'react-native';
 
 // 
 const Tab = createBottomTabNavigator<RootStackParamList>();
@@ -15,13 +17,14 @@ export type RootStackParamList = {
   Home: undefined,
   Login: undefined,
   Camera: undefined,
-  Overlay: {uri: string},
+  Overlay: {imageAsset: MediaLibrary.Asset},
 }
 
 // Root point for the Climbing UI Notes App (Possible name - Beta Trackr ?)
 export default function App() {
   return (
     <>
+    <View style={{height: Dimensions.get('window').height, width: Dimensions.get('window').width}}>
       <NavigationContainer>
         <Tab.Navigator
           initialRouteName='Home'
@@ -38,6 +41,7 @@ export default function App() {
         </Tab.Navigator>
       </NavigationContainer>
       <StatusBar style="light" />
+      </View>
     </>
   );
 }
