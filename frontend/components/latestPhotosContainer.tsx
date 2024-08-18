@@ -1,10 +1,30 @@
 import { View, Text, Image, Button } from "react-native";
 import * as imagePicker from 'expo-image-picker'
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
+import { ScrollView } from "react-native-gesture-handler";
+import * as mediaLibrary from "expo-media-library";
 
-export function LatestPhotoContainer({handleNavigate}) {
+export interface LatestPhotoContainerProps {
+    handleNavigate: (image) => void
+}
+
+export function LatestPhotoContainer({handleNavigate}: LatestPhotoContainerProps): ReactElement {
 
     const [image, setImage] = useState(null);
+
+    const ALBUM_STRING = 'climbing'
+
+    const [climbingAssets, setClimbingAssets] = useState<mediaLibrary.Asset[]>([]);
+
+    useEffect(() => {
+        setPictureContainer();
+    }, [])
+
+    const setPictureContainer = async () => {
+        const album: mediaLibrary.Album = await mediaLibrary.getAlbumAsync(ALBUM_STRING)
+        const assets: mediaLibrary.PagedInfo<mediaLibrary.Asset> = await mediaLibrary.getAssetsAsync({album: album});
+        setClimbingAssets(assets.assets)
+    }
 
     useEffect(() => {
         if (image) {
@@ -27,6 +47,13 @@ export function LatestPhotoContainer({handleNavigate}) {
 
     return (
         <>
+        <ScrollView horizontal={true}>
+            {climbingAssets && climbingAssets.map((asset) => {
+                return (
+                    <Image source={{uri: asset.uri}} style={{width: "100%", height: "20%"}} />
+                )
+            })}
+        </ScrollView>
         <View style={{width:"100%", height:"10%", backgroundColor:"yellow", zIndex:2}}>
             {image && <Image source={{uri: image}} style={{width: "100%", height: "100%"}}/>}
             <Button title= {"Stuff here"} onPress={PickImage}/>

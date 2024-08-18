@@ -7,7 +7,6 @@ import TakePictureButton from '../components/takePictureButton';
 import * as MediaLibrary from 'expo-media-library';
 import { useAlbum } from '../hooks/useAlbum';
 import { LatestPhotoContainer } from '../components/latestPhotosContainer';
-import { NavigationProp } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
 
