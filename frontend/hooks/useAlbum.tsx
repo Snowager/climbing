@@ -3,13 +3,9 @@ import * as MediaLibrary from 'expo-media-library';
 import * as Permissions from 'expo-permissions';
 import { ReactElement, useEffect, useState } from 'react';
 
-export interface nameProp {
-    albumName: string
-}
-
 // Hook that async returns an existing album on the user's android phone
-export async function useAlbum(albumName): Promise<ReactElement<nameProp>>  {
-    const [album, setAlbum] = useState(null);
+export async function useAlbum(albumName): Promise<MediaLibrary.Album> {
+    const [album, setAlbum] = useState<MediaLibrary.Album>(null);
 
     useEffect(() => {
         const checkAlbum = async () => {
@@ -23,6 +19,5 @@ export async function useAlbum(albumName): Promise<ReactElement<nameProp>>  {
         }
         checkAlbum();
     }, [albumName])
-    //console.log(album);
     return album;
 }

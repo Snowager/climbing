@@ -11,10 +11,11 @@ type Props = {
 }
 
 // View pane for the mobileOverlayView --TODO-- create and add option shelves
-export default function MobileOverlayView({navigation}): ReactElement<Props> {
+export default function MobileOverlayView({route, navigation}): ReactElement<Props> {
+    const {imageAsset} = route.params;
 
     return (
-        <><IconListHandler/></>
+        <><IconListHandler image={imageAsset}/></>
     )
 
     

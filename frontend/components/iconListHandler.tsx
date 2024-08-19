@@ -1,7 +1,8 @@
 import { useEffect, useState, useMemo, useRef, ReactElement } from "react"
-import { View, Animated } from "react-native"
+import { View, Animated, Image} from "react-native"
 import OverlayIconGestureHandler from "./overlayIconGestureHandler"
 import { GestureHandlerRootView, Gesture, GestureDetector, TapGesture } from "react-native-gesture-handler"
+import * as MediaLibrary from 'expo-media-library';
 
 
 // interface for icon position coords
@@ -15,12 +16,16 @@ export interface Icon {
     coords: Coord
 }
 
-export default function IconListHandler(): ReactElement {
+// interface for icon list props
+export interface IconListHandlerProps {
+    image: MediaLibrary.Asset
+}
+
+export default function IconListHandler({image}): ReactElement {
     const [iconList, setIconList] = useState<Icon[]>([])
     const [coords, setCoords] = useState<Coord>({xpos: null, ypos: null})
     const xoff: number = 100
     const yoff: number = 50
-
     
     // Controls tapping on the screen for generating an icon
     const tapGesture: TapGesture = Gesture.Tap()
@@ -45,6 +50,7 @@ export default function IconListHandler(): ReactElement {
             })
             .runOnJS(true); // needs to run on JS thread for React states
 
+    // useEffect to update iconList with new icon when new coords logged --TODO-- add support for tracking moved icon positions
     useEffect(() => {
         if (coords.xpos !== null && coords.xpos !== null) setIconList([...iconList, {coords: coords}]);
     }, [coords])
@@ -57,7 +63,8 @@ export default function IconListHandler(): ReactElement {
                 <View>
                 <GestureHandlerRootView style={{height: '100%', width: '100%'}}>
                 <GestureDetector gesture={tapGesture}>
-                <Animated.View style={{height:600, width:400, backgroundColor:'yellow'}}>
+                <Animated.View style={{height:"100%", width:"100%"}}>
+                    {image && <Image source={{uri: image.uri}} style={{height: "100%", width:"100%", resizeMode:'stretch'}}/>}
                     {/* {console.log(iconList)} */}
                     {iconList && iconList.map((icon, i) => {
                         return (
@@ -78,7 +85,7 @@ export default function IconListHandler(): ReactElement {
                 </GestureHandlerRootView>
                 </View>
         )
-    }, [iconList])
+    }, [iconList, image])
 
     return (
         <>{ui}</>
