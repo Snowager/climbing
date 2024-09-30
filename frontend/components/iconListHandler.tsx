@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo, useRef, ReactElement } from "react"
 import { View, Animated, Image} from "react-native"
-import OverlayIconGestureHandler from "./overlayIconGestureHandler"
+import OverlayIconGestureHandler from "./OverlayIconGestureHandler";
 import { GestureHandlerRootView, Gesture, GestureDetector, TapGesture } from "react-native-gesture-handler"
 import * as MediaLibrary from 'expo-media-library';
 
