@@ -1,21 +1,16 @@
 import { StyleSheet, View } from 'react-native';
 import TopBar from './topBar';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { RootStackParamList } from '../App';
 import { ReactElement } from 'react';
-
-type NavigationProps = BottomTabNavigationProp<RootStackParamList, 'Login'>
-
-type Props = {
-    navigation: NavigationProps
-}
+import LoginContent from './loginContent';
 
 // Login page component --TODO-- implement login functionality in later sprint task
-export default function Login({navigation}): ReactElement<Props> {
+export default function Login(): ReactElement {
     return (
         <View style={styles.container}>
             <TopBar/>
-            <View style={styles.mainPane}></View>
+            <View style={styles.mainPane}>
+                <LoginContent/>
+            </View>
         </View>
     );
 }
@@ -23,14 +18,12 @@ export default function Login({navigation}): ReactElement<Props> {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
     },
     mainPane: {
         flex: 1,
         maxHeight: 1000,
-        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
     },

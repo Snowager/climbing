@@ -1,5 +1,5 @@
 import { Image, ScrollView, TouchableOpacity } from "react-native";
-import { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import * as mediaLibrary from "expo-media-library";
 
 export const ALBUM_STRING = 'climbing'
