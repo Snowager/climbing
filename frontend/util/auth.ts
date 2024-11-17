@@ -15,6 +15,11 @@ console.log(firebaseConfig)
 
 const app = initializeApp(firebaseConfig);
 
+export const returnAuth = () => {
+    const auth = getAuth(app)
+    return auth;
+};
+
 
 export const createNewUser = async (email, password) => {
     const auth = getAuth(app);
@@ -26,17 +31,17 @@ export const createNewUser = async (email, password) => {
     }).catch((error) => {
         console.log(error.message);
     });
-    return await user.getIdTokenResult();
+    //return await user.getIdTokenResult();
 };
 
 export const signInUser = async (email, password) => {
     const auth = getAuth(app);
     let user: User;
+    console.log(email, password)
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredentials) => {
         user = userCredentials.user;
     }).catch((error) => {
         console.log(error.message);
     })
-    return await user.getIdTokenResult();
 };

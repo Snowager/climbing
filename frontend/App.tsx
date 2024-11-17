@@ -8,6 +8,8 @@ import MobileOverlayView from './pages/mobileOverlayView';
 import * as MediaLibrary from 'expo-media-library'
 import { Dimensions, View } from 'react-native';
 import LoginView from './pages/loginView';
+import { createContext } from 'react';
+import AuthContext from './context/authContext';
 
 // 
 const Tab = createBottomTabNavigator<RootStackParamList>();
@@ -21,8 +23,11 @@ export type RootStackParamList = {
 
 // Root point for the Climbing UI Notes App (Possible name - Beta Trackr ?)
 export default function App() {
+
+  const UserContext = createContext(null);
   return (
     <View style={{height: Dimensions.get('window').height, width: Dimensions.get('window').width}}>
+      <AuthContext>
       <NavigationContainer>
         <Tab.Navigator
           initialRouteName='Home'
@@ -39,6 +44,7 @@ export default function App() {
         </Tab.Navigator>
       </NavigationContainer>
       <StatusBar style="light" />
+      </AuthContext>
     </View>
   );
 }
