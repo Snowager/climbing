@@ -7,7 +7,7 @@ import { UserContext } from "../context/authContext";
 export default function LoginForm(): ReactElement {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const {user, login, signup, logout} = useContext(UserContext);
+  const {signup, login, user, logout} = useContext(UserContext);
 
   
   //const navigation = useNavigation();
@@ -30,20 +30,22 @@ export default function LoginForm(): ReactElement {
           {user && user.email && <Text>{user.email}</Text>}
           <TextInput value={email} onChangeText={text => setEmail(text)} style={styles.inputForm} placeholder="Email" placeholderTextColor="#c0c0c0"/>
           <TextInput value={password} onChangeText={text => setPassword(text)} style={styles.inputForm} placeholder="Password" secureTextEntry placeholderTextColor="#c0c0c0"/>
-          <Pressable onPress={() => login(email, password)} style={{width: "100%", display:'flex', alignItems:'center'}}>
+          <Pressable onPress={() => {
+            console.log(email), 
+            login(email, password)}} style={{width: "100%", display:'flex', alignItems:'center'}}>
             <View style={styles.loginButton}>
               <Text>
               Login
               </Text>
             </View>
           </Pressable>
-            <Pressable style={{width: "100%", display:'flex', alignItems:'center'}} onPress={() => signup(email, password)}>
+            <Pressable style={{width: "100%", display:'flex', alignItems:'center'}} onPress={() => {signup(email, password)}}>
               <View style={styles.signUpButton}><Text>Sign Up</Text></View></Pressable>
-              <Pressable style={{width: "100%", display:'flex', alignItems:'center'}} onPress={() => logout()}>
+              <Pressable style={{width: "100%", display:'flex', alignItems:'center'}} onPress={() => {logout()}}>
               <View style={styles.signUpButton}><Text>Logout</Text></View></Pressable>
       </View>
     );
-  }, [user])
+  }, [user, email, password])
     
   return (
     <>{gui}</>
