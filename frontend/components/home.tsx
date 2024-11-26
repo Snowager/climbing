@@ -1,12 +1,14 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import TopBar from './topBar';
-import { ReactElement } from 'react';
+import { ReactElement, useContext } from 'react';
+
 
 // View pane for the home page screen
 export default function Home(): ReactElement {
     return (
+        
         <View style={styles.container}>
-            <TopBar />
+            <TopBar/>
             <View style={styles.mainPane}></View>
         </View>
     );

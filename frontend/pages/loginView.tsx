@@ -1,20 +1,20 @@
+
 import React, { ReactElement } from 'react';
-import IconListHandler from '../components/iconListHandler';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { RootStackParamList } from '../App';
+import Login from '../components/login';
 
-type NavigationProps = BottomTabNavigationProp<RootStackParamList, 'Overlay'>
+type NavigationProps = BottomTabNavigationProp<RootStackParamList, 'Loginmnn'>
 
 type Props = {
     navigation: NavigationProps
 }
 
 // View pane for the mobileOverlayView --TODO-- create and add option shelves
-export default function MobileOverlayView({route, navigation}): ReactElement<Props> {
-    const {imageAsset} = route.params;
+export default function LoginView({route, navigation}): ReactElement<Props> {
 
     return (
-        <><IconListHandler image={imageAsset}/></>
+        <><Login/></>
     )
 
     
