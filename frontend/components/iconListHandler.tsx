@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useRef, ReactElement } from "react"
+import React, { useEffect, useState, useMemo, useRef, ReactElement } from "react"
 import { View, Animated, Image} from "react-native"
 import OverlayIconGestureHandler from "./OverlayIconGestureHandler";
 import { GestureHandlerRootView, Gesture, GestureDetector, TapGesture } from "react-native-gesture-handler"
@@ -18,7 +18,7 @@ export interface Icon {
 
 // interface for icon list props
 export interface IconListHandlerProps {
-    image: MediaLibrary.Asset
+    image: MediaLibrary.Asset | null
 }
 
 export default function IconListHandler({image}): ReactElement {
@@ -64,7 +64,7 @@ export default function IconListHandler({image}): ReactElement {
                 <GestureHandlerRootView style={{height: '100%', width: '100%'}}>
                 <GestureDetector gesture={tapGesture}>
                 <Animated.View style={{height:"100%", width:"100%"}}>
-                    {image && <Image source={{uri: image.uri}} style={{height: "100%", width:"100%", resizeMode:'stretch'}}/>}
+                    {!!image && <Image source={{uri: image.uri}} style={{height: "100%", width:"100%", resizeMode:'stretch'}}/>}
                     {/* {console.log(iconList)} */}
                     {iconList && iconList.map((icon, i) => {
                         return (
