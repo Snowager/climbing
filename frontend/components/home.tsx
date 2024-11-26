@@ -1,16 +1,14 @@
 import { StyleSheet, View, Text } from 'react-native';
 import TopBar from './topBar';
 import { ReactElement, useContext } from 'react';
-import { UserContext } from '../context/authContext';
+
 
 // View pane for the home page screen
 export default function Home(): ReactElement {
-    const {user} = useContext(UserContext);
     return (
         
         <View style={styles.container}>
-            <TopBar />
-            {user && user.email && <Text>{user.email}</Text>}
+            <TopBar/>
             <View style={styles.mainPane}></View>
         </View>
     );

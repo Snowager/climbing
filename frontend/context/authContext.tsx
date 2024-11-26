@@ -1,42 +1,37 @@
 import React, { createContext, useEffect, useState } from "react";
-import { createNewUser, signInUser, returnAuth } from "../util/auth";
+import { createNewUser, signInUser, auth} from "../util/auth";
 import { onAuthStateChanged } from "firebase/auth";
 
+
 export const UserContext = createContext(null)
+export const ErrorContext = createContext(null)
 
 export default function AuthContext ({children}) {
 
     const [currentUser, setCurrentUser] = useState(null);
-
-    const auth = returnAuth();
-
-    
+    const [authError, setAuthError] = useState("");
 
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
             if (user) {
                 console.log("logged in")
                 setCurrentUser(user);
+                setAuthError("");
             }
         })
     }, [auth])
 
-    const login = (email, password) => {
-        console.log("login"+email)
-        signInUser(email, password);
-    }
-
-    const signup = (email, password) => {
-        createNewUser(email, password);
-    }
-
     const logout = () => {
-        console.log("logging out")
-        auth.signOut();
-        setCurrentUser(null);
+        if (currentUser) {
+            auth.signOut().then(() => setCurrentUser(null)).catch((error) => {
+                console.log(error.message)
+            });
+            console.log("hit")
+        }
+        if (authError) setAuthError("");
     }
 
     return (
-        <UserContext.Provider value={{signup:signup, login:login, user:currentUser, logout:logout}}>{children}</UserContext.Provider>
+        <ErrorContext.Provider value={{error:authError, setError:setAuthError}}><UserContext.Provider value={{user:currentUser, logout:logout}}>{children}</UserContext.Provider></ErrorContext.Provider>
     )
 }
