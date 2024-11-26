@@ -16,7 +16,7 @@ const Tab = createBottomTabNavigator<RootStackParamList>();
 
 export type RootStackParamList = {
   Home: undefined,
-  Loginmnn: undefined,
+  Login: undefined,
   Camera: undefined,
   Overlay: {imageAsset: MediaLibrary.Asset},
 }
@@ -37,7 +37,7 @@ export default function App() {
             tabBarActiveBackgroundColor: '#fff',
             tabBarInactiveBackgroundColor: '#000',
           })}>
-          <Tab.Screen name="Loginmnn" component={LoginView} />
+          <Tab.Screen name="Login" component={LoginView} />
           <Tab.Screen name="Home" component={Home} />
           <Tab.Screen name="Camera" component={PictureView} />
           <Tab.Screen name="Overlay" component={MobileOverlayView} />
