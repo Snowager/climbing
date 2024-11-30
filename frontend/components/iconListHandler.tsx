@@ -90,7 +90,6 @@ export default function IconListHandler({image}): ReactElement {
     const ui = useMemo(() => {
         return (
                 <View>
-                <GestureHandlerRootView style={{height: '100%', width: '100%'}}>
                 <GestureDetector gesture={tapGesture}>
                 <Animated.View style={{height:"100%", width:"100%"}}>
                     {!!image && <Image source={{uri: image.uri}} style={{height: "100%", width:"100%", resizeMode:'stretch'}}/>}
@@ -111,7 +110,6 @@ export default function IconListHandler({image}): ReactElement {
                     })}
                 </Animated.View>
                 </GestureDetector>
-                </GestureHandlerRootView>
                 </View>
         )
     }, [JSON.stringify(iconList), image])
