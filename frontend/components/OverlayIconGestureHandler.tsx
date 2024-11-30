@@ -1,5 +1,5 @@
 import React, { ReactElement, SetStateAction, useEffect, useMemo, useState } from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, View } from 'react-native';
 import { Gesture, GestureDetector, PanGesture, PinchGesture, SimultaneousGesture, TapGesture} from 'react-native-gesture-handler';
 import Animated, {
   useSharedValue,
@@ -104,7 +104,9 @@ export default function OverlayIconGestureHandler({id, remove, changeCoords, ico
         return (
             <GestureDetector gesture={composeGesture}>
               <Animated.View style={[animatedStyle]}>
-                  <Image source={iconArr[index]} style={styles(xoff, yoff).box} />
+                <View style={styles(xoff, yoff).box}>
+                  <Image source={iconArr[index]} style={{width:"100%", height:"100%"}} />
+                </View>
               </Animated.View>
             </GestureDetector>
           );
@@ -122,6 +124,6 @@ export default function OverlayIconGestureHandler({id, remove, changeCoords, ico
     position: 'absolute',
     height: xoff,
     width: yoff*2,
-    zIndex:12,
+    elevation: 12,
     },
   });
