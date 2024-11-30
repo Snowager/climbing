@@ -1,7 +1,9 @@
 import React, { ReactElement } from 'react';
+import { View } from 'react-native';
 import IconListHandler from '../components/iconListHandler';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { RootStackParamList } from '../App';
+import OverlayIconShelf from '../components/overlayIconShelf';
 
 type NavigationProps = BottomTabNavigationProp<RootStackParamList, 'Overlay'>
 
@@ -18,7 +20,13 @@ export default function MobileOverlayView({route, navigation}): ReactElement<Pro
     }
 
     return (
-        <><IconListHandler image={asset || null}/></>
+        <>
+        <View style={{width:"100%", height:"100%"}}>
+                <OverlayIconShelf>
+                    <IconListHandler image={asset || null}/>
+                </OverlayIconShelf>
+        </View>
+        </>
     )
 
     

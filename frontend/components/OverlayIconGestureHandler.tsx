@@ -35,6 +35,8 @@ export default function OverlayIconGestureHandler({id, remove, changeCoords, ico
     const xrot = useSharedValue<number>(0);
     const yrot = useSharedValue<number>(0);
 
+
+    // -- TODO -- move iconArr to separate object with different categories (hand, foot, hold type, force vector) in shelf parent
     const iconArr = [
         require('../assets/overlayMarkers/Button.jpg'), 
         require('../assets/overlayMarkers/hulk.jpg'),
